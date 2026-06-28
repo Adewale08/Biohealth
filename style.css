@@ -417,3 +417,110 @@ button { font-family: inherit; cursor: pointer; font-weight: 700; border-radius:
 .form-actions { margin-top: 10px; display: flex; justify-content: flex-end; }
 .form-actions button { width: 100%; }
 .form-actions button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+
+@media (max-width: 768px) {
+    /* 1. Release the height constraint to allow normal scrolling */
+    body, .app-layout {
+        height: auto;
+        overflow-y: visible;
+        flex-direction: column;
+    }
+
+    .main-content {
+        overflow-y: visible;
+    }
+
+    /* 2. Turn the Sidebar into a scrollable top navigation bar */
+    .sidebar {
+        width: 100%;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .brand {
+        justify-content: center;
+        padding: 16px;
+    }
+
+    .nav-menu {
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 12px 16px;
+        gap: 12px;
+        /* Hide scrollbar for a cleaner look */
+        scrollbar-width: none; 
+    }
+    .nav-menu::-webkit-scrollbar { display: none; }
+
+    .nav-item {
+        white-space: nowrap; /* Prevents text from breaking onto two lines */
+        padding: 10px 16px;
+        font-size: 0.95rem;
+    }
+
+    /* Hide the doctor profile on mobile to save precious screen space */
+    .sidebar-footer { display: none; }
+
+    /* 3. Adjust the Topbar Header */
+    .topbar {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+        padding: 16px;
+    }
+
+    .topbar-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    /* 4. Collapse the Grids from 3 Columns down to 1 Column */
+    .content-area { padding: 16px; }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* 5. Scale down the Scanner UI */
+    .scan-card { padding: 30px 20px; }
+    .scan-header h2 { font-size: 1.6rem; }
+    
+    .scanner-wrapper {
+        width: 140px;
+        height: 140px;
+        margin: 30px auto;
+    }
+    .scanner-device { width: 90px; height: 90px; }
+
+    /* 6. Stack the Profile Banner */
+    .profile-banner {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+        padding: 24px 16px;
+    }
+    .profile-main { flex-direction: column; }
+    
+    /* 7. Stack Vitals and Action Buttons */
+    .vitals-flex { flex-direction: column; }
+    
+    .action-bar {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+    
+    .action-buttons {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .action-buttons button { width: 100%; }
+}
