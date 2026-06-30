@@ -40,7 +40,7 @@
             </div>
         </aside>
 
-        <!-- Main Content Area -->
+<!-- Main Content Area -->
         <main class="main-content">
             <!-- Topbar -->
             <header class="topbar">
@@ -52,7 +52,13 @@
                     <div class="status-indicator">
                         <span class="dot live-dot"></span> System Online
                     </div>
-                    <button class="icon-btn">🔔</button>
+                    <div class="doctor-profile" style="display: flex; align-items: center; gap: 12px; margin-left: 15px;">
+                        <div class="doc-avatar" style="width: 35px; height: 35px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">O</div>
+                        <div class="doc-info" style="line-height: 1.2;">
+                            <strong style="display: block; font-size: 0.9rem;">Dr. Oluwatunmise</strong>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">LUTH ER Unit</span>
+                        </div>
+                    </div>
                 </div>
             </header>
 
@@ -66,9 +72,7 @@
                             <h2>Awaiting Biometric Input</h2>
                             <p>Place the patient's finger on the external USB scanner.</p>
                         </div>
-                        
                         <div class="scanner-wrapper">
-                            <!-- Animated Pulse Rings -->
                             <div class="pulse-ring"></div>
                             <div class="pulse-ring delay"></div>
                             <div class="scanner-device">
@@ -77,35 +81,23 @@
                                 </svg>
                             </div>
                         </div>
-
                         <div class="scan-action">
                             <button id="scan-btn" class="btn-primary">Initiate Manual Scan Override</button>
                             <p id="scan-status" class="status-text">Scanner connected on USB Port 1</p>
                         </div>
                     </div>
                 </section>
-                <!-- DIRECTORY STATE (Hidden initially) -->
-                <section id="directory-section" class="state-container hidden">
-                    <div class="card">
-                        <div class="widget-header">
-                            <h3>Hospital Patient Directory</h3>
-                            <span style="background: var(--primary-light); color: var(--primary);">👥</span>
-                        </div>
-                        <p style="color: var(--text-muted); margin-bottom: 20px;">Select a patient to manually view their medical records.</p>
-                        
-                        <!-- JS will inject patient cards into this grid -->
-                        <div class="directory-grid" id="directory-list"></div>
-                    </div>
-                </section>
-                <!-- RECORD STATE (Hidden initially) -->
+
+                <!-- RECORD STATE -->
                 <section id="record-section" class="state-container hidden">
-                    
-                    <!-- Top Profile Banner -->
                     <div class="profile-banner card">
                         <div class="profile-main">
                             <div class="patient-avatar-large">👤</div>
                             <div class="patient-title">
                                 <h2 id="patient-name">Fetching...</h2>
+                                <p style="color: var(--text-muted); font-weight: 600; margin-bottom: 8px;">
+                                    <span id="patient-age">--</span> yrs • Genotype: <span id="patient-genotype">--</span>
+                                </p>
                                 <span class="badge gray-badge" id="patient-id">ID: ---</span>
                             </div>
                         </div>
@@ -116,73 +108,54 @@
                         </div>
                     </div>
 
-                    <!-- 3-Column Data Grid -->
+                    <!-- TIER 1: EMERGENCY ACCESS -->
+                    <div class="widget-header" style="margin-top: 10px; border-bottom: 2px solid var(--danger);">
+                        <h3 style="color: var(--danger);">Level 1: Emergency Access (Global)</h3>
+                    </div>
+                    
                     <div class="dashboard-grid">
-                        
-                        <!-- Col 1: Alerts -->
                         <div class="card alert-widget">
-                            <div class="widget-header">
-                                <h3>Critical Alerts</h3>
-                                <span class="icon-danger">⚠️</span>
-                            </div>
+                            <div class="widget-header"><h3>Critical Alerts</h3><span class="icon-danger">⚠️</span></div>
                             <div class="widget-body">
-                                <div class="data-group">
-                                    <label>Blood Type</label>
-                                    <div class="data-value highlight-blue" id="blood-type">--</div>
-                                </div>
+                                <div class="data-group"><label>Blood Type</label><div class="data-value highlight-blue" id="blood-type">--</div></div>
                                 <div class="divider"></div>
-                                <div class="data-group">
-                                    <label>Known Allergies</label>
-                                    <div class="data-value highlight-red" id="allergies">--</div>
-                                </div>
+                                <div class="data-group"><label>Known Allergies</label><div class="data-value highlight-red" id="allergies">--</div></div>
                             </div>
                         </div>
 
-                        <!-- Col 2: Vitals -->
                         <div class="card vitals-widget">
-                            <div class="widget-header">
-                                <h3>Recent Vitals</h3>
-                                <span>❤️</span>
-                            </div>
-                            <div class="widget-body vitals-flex">
-                                <div class="vital-box">
-                                    <span class="vital-num">68</span>
-                                    <span class="vital-unit">bpm</span>
-                                    <span class="vital-label">Heart Rate</span>
-                                </div>
-                                <div class="vital-box">
-                                    <span class="vital-num">98</span>
-                                    <span class="vital-unit">%</span>
-                                    <span class="vital-label">SpO2</span>
-                                </div>
+                            <div class="widget-header"><h3>Current Meds & Conditions</h3><span>💊</span></div>
+                            <div class="widget-body">
+                                <div class="data-group"><label>Current Medications</label><div class="data-value" style="font-size: 1.1rem;" id="medications">--</div></div>
+                                <div class="divider"></div>
+                                <div class="data-group"><label>Chronic Conditions</label><div class="data-value highlight-red" style="font-size: 1.1rem;" id="chronic-conditions">--</div></div>
                             </div>
                         </div>
 
-                        <!-- Col 3: History -->
                         <div class="card history-widget">
-                            <div class="widget-header">
-                                <h3>Emergency Log</h3>
-                                <span>🕒</span>
-                            </div>
-                            <div class="widget-body timeline-wrapper">
-                                <div class="timeline-track"></div>
-                                <div class="timeline-node active-node">
-                                    <div class="node-dot"></div>
-                                    <div class="node-content">
-                                        <strong>Match Found</strong>
-                                        <span>Just now • ER Ward A</span>
-                                    </div>
-                                </div>
-                                <div class="timeline-node">
-                                    <div class="node-dot"></div>
-                                    <div class="node-content">
-                                        <strong>Routine Check</strong>
-                                        <span>Oct 12 • General Clinic</span>
-                                    </div>
-                                </div>
+                            <div class="widget-header"><h3>Emergency Contacts</h3><span>📞</span></div>
+                            <div class="widget-body">
+                                <div class="data-group"><label>Primary Contact</label><div class="data-value" style="font-size: 1.1rem;" id="emergency-contact">--</div></div>
+                                <div class="divider"></div>
+                                <div class="data-group"><label>Emergency Consent</label><div class="data-value highlight-blue" style="font-size: 1.1rem;" id="emergency-consent">--</div></div>
                             </div>
                         </div>
+                    </div>
 
+                    <!-- TIER 2: FULL MEDICAL RECORD -->
+                    <div class="widget-header" style="margin-top: 20px; border-bottom: 2px solid var(--primary);">
+                        <h3 style="color: var(--primary);">Level 2: Full Medical Record (Authorized)</h3>
+                        <span style="font-size: 0.8rem; background: var(--primary-light); padding: 4px 8px; border-radius: 4px; color: var(--primary);">🔓 Access Granted</span>
+                    </div>
+
+                    <div class="card" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                        <div class="data-group"><label>Consultation & Admission History</label><div class="data-value" style="font-size: 1rem; font-weight: 500;" id="consultation-history">--</div></div>
+                        <div class="data-group"><label>Surgery History</label><div class="data-value" style="font-size: 1rem; font-weight: 500;" id="surgery-history">--</div></div>
+                        <div class="data-group"><label>Lab & Imaging Results</label><div class="data-value" style="font-size: 1rem; font-weight: 500;" id="lab-results">--</div></div>
+                        <div class="data-group"><label>Vaccination History</label><div class="data-value" style="font-size: 1rem; font-weight: 500;" id="vaccinations">--</div></div>
+                        <div class="data-group"><label>Mental Health Records</label><div class="data-value" style="font-size: 1rem; font-weight: 500;" id="mental-health">--</div></div>
+                        <div class="data-group"><label>Reproductive / Sexual Health</label><div class="data-value" style="font-size: 1rem; font-weight: 500;" id="reproductive-health">--</div></div>
+                        <div class="data-group" style="grid-column: 1 / -1;"><label>Doctor's Notes & Long-Term Plans</label><div class="data-value" style="font-size: 1rem; font-weight: 500;" id="doctor-notes">--</div></div>
                     </div>
 
                     <!-- Bottom Action Bar -->
@@ -193,27 +166,38 @@
                             <button class="btn-danger" id="notify-btn">Trigger Auto-SMS to Kin</button>
                         </div>
                     </div>
-
                 </section>
-            </div>
-            <!-- REGISTRATION STATE (Hidden initially) -->
-                <section id="signup-section" class="state-container hidden">
-                    <div class="card" style="max-width: 800px; margin: 0 auto; width: 100%;">
+
+                <!-- DIRECTORY STATE -->
+                <section id="directory-section" class="state-container hidden">
+                    <div class="card">
                         <div class="widget-header">
-                            <h3>Register New Patient</h3>
+                            <h3>Hospital Patient Directory</h3>
+                            <span style="background: var(--primary-light); color: var(--primary);">👥</span>
+                        </div>
+                        <p style="color: var(--text-muted); margin-bottom: 20px;">Select a patient to manually view their medical records.</p>
+                        <div class="directory-grid" id="directory-list"></div>
+                    </div>
+                </section>
+
+                <!-- REGISTRATION STATE -->
+                <section id="signup-section" class="state-container hidden">
+                    <div class="card" style="max-width: 900px; margin: 0 auto; width: 100%;">
+                        <div class="widget-header">
+                            <h3>Register New Patient Biometrics</h3>
                             <span style="background: var(--success-light); color: var(--success);">📝</span>
                         </div>
                         
                         <form id="registration-form" class="signup-form">
+                            <!-- Emergency Access Fields -->
+                            <h4 style="color: var(--danger); margin-top: 10px;">Level 1: Emergency Access Data</h4>
                             <div class="form-grid">
-                                <div class="form-group">
-                                    <label>Full Name</label>
-                                    <input type="text" id="reg-name" required placeholder="e.g. Jane Doe">
-                                </div>
+                                <div class="form-group"><label>Full Name</label><input type="text" id="reg-name" required placeholder="e.g. Jane Doe"></div>
+                                <div class="form-group"><label>Age</label><input type="number" id="reg-age" required placeholder="e.g. 34"></div>
+                                
                                 <div class="form-group">
                                     <label>Blood Type</label>
                                     <select id="reg-blood" required>
-                                        <option value="">Select Blood Type</option>
                                         <option value="O Positive">O Positive</option>
                                         <option value="O Negative">O Negative</option>
                                         <option value="A Positive">A Positive</option>
@@ -221,11 +205,28 @@
                                         <option value="AB Positive">AB Positive</option>
                                     </select>
                                 </div>
-                                <div class="form-group full-width">
-                                    <label>Known Allergies</label>
-                                    <input type="text" id="reg-allergies" required placeholder="e.g. Penicillin, Peanuts (or 'None')">
-                                </div>
                                 <div class="form-group">
+                                    <label>Genotype</label>
+                                    <select id="reg-genotype" required>
+                                        <option value="AA">AA</option>
+                                        <option value="AS">AS</option>
+                                        <option value="SS">SS</option>
+                                        <option value="AC">AC</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group"><label>Known Allergies</label><input type="text" id="reg-allergies" required placeholder="e.g. Penicillin (or 'None')"></div>
+                                <div class="form-group"><label>Current Medications</label><input type="text" id="reg-meds" required placeholder="e.g. Inhaler, Insulin"></div>
+                                
+                                <div class="form-group full-width"><label>Chronic Conditions</label><input type="text" id="reg-chronic" required placeholder="e.g. Asthma, Diabetes"></div>
+                                
+                                <div class="form-group"><label>Emergency Contact</label><input type="text" id="reg-contact" required placeholder="Name & Phone"></div>
+                                <div class="form-group">
+                                    <label>Emergency Treatment Consent</label>
+                                    <select id="reg-consent" required><option value="Granted">Granted</option><option value="Denied">Denied</option></select>
+                                </div>
+                                
+                                <div class="form-group full-width">
                                     <label>HMO / Wallet Status</label>
                                     <select id="reg-wallet" required>
                                         <option value="Active HMO Account">Active HMO Account</option>
@@ -233,21 +234,27 @@
                                         <option value="Insurance Expired">Insurance Expired</option>
                                     </select>
                                 </div>
-                                <div class="form-group checkbox-group">
-                                    <input type="checkbox" id="reg-critical">
-                                    <label for="reg-critical">Mark as Critical Condition?</label>
-                                </div>
                             </div>
 
                             <div class="divider"></div>
 
-                            <!-- Biometric Capture Step -->
+                            <!-- Full Record Fields -->
+                            <h4 style="color: var(--primary);">Level 2: Full Medical Record</h4>
+                            <div class="form-grid">
+                                <div class="form-group full-width"><label>Consultation & Admission History</label><input type="text" id="reg-history" placeholder="Previous hospital visits..."></div>
+                                <div class="form-group"><label>Surgery History</label><input type="text" id="reg-surgery" placeholder="e.g. Appendectomy (2018)"></div>
+                                <div class="form-group"><label>Lab & Imaging Results</label><input type="text" id="reg-labs" placeholder="e.g. MRI clear"></div>
+                                <div class="form-group"><label>Mental Health Records</label><input type="text" id="reg-mental" placeholder="e.g. Therapy for Anxiety"></div>
+                                <div class="form-group"><label>Reproductive / Sexual Health</label><input type="text" id="reg-reproductive" placeholder="e.g. Routine screenings clear"></div>
+                                <div class="form-group"><label>Vaccination History</label><input type="text" id="reg-vax" placeholder="e.g. COVID, Yellow Fever"></div>
+                                <div class="form-group full-width"><label>Doctor's Notes & Plans</label><input type="text" id="reg-notes" placeholder="e.g. Monitor blood pressure monthly"></div>
+                            </div>
+
+                            <div class="divider"></div>
+
                             <div class="biometric-capture-box">
                                 <p>Biometric Link Required</p>
-                                <button type="button" id="btn-capture-bio" class="btn-secondary" style="width: 100%;">
-                                    🔗 Click to Scan Fingerprint
-                                </button>
-                                <input type="hidden" id="bio-status" value="false" required>
+                                <button type="button" id="btn-capture-bio" class="btn-secondary" style="width: 100%;">🔗 Click to Scan Fingerprint</button>
                             </div>
 
                             <div class="form-actions">
@@ -256,8 +263,36 @@
                         </form>
                     </div>
                 </section>
+            </div>
         </main>
     </div>
     <script src="app.js"></script>
+    <script>
+        
+    let nums = [0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1];
+    nums = [0,0,0,1,1,1]
+    const k = 2;
+
+    let [l, r] = [0, 0];
+    let counter = k;
+    let max = 0;
+
+    while (r < nums.length) {
+
+        if (nums[r] === 0) counter--;
+
+        while (counter < 0) {
+            if (nums[l] === 0) counter++;
+            l++;
+        }
+        console.log(nums.slice(l, r+1))
+
+        max = Math.max(max, r - l + 1);
+        r++;
+    }
+
+    console.log(max);
+        
+    </script>
 </body>
 </html>
